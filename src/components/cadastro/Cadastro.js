@@ -1,60 +1,56 @@
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import styled from "styled-components"
 import axios from "axios"
+import styled from "styled-components"
 
-export default function Login(){
-    
+
+export default function Cadastro(){
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
+    const [nome, setNome] = useState("")
+    const [confirmaSenha, setConfirmaSenha] = useState("")
+
 
     let navigate = useNavigate()
 
-    function fazerLogin(event) {
+
+    function fazerCadastro(event) {
 		event.preventDefault();
 
 		try{
-			const requisicao = axios.post("", {
+			const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", {
+    
             email: email,
+            name: nome,
             password: senha
-		})
-
-            requisicao.then((req)=>{
-                //localStorage.setItem("imguser", req.data.image)
-                //localStorage.setItem("token", req.data.token)
-                navigate("/habitos")
-            })
-            .catch(()=>{
-                console.log("deu ruim na req parça")
-            })
-
+            
+		});
+		console.log(requisicao)
+			navigate("/")
 		}catch {
 			console.log("deu ruim")
-            
-            setEmail("")
-            setSenha("")
 		}
 	}
 
     return(
-        <div className="login">
-            <Styledlogin>
-            <form onSubmit={fazerLogin}>
-                
+        <Styledlogin >
+            <form onSubmit={fazerCadastro}>
                 <h1>MyWallet</h1>
-                <input required type="email" id="campoemail" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} /><br/>
+                <input required type="email" id="campoEmail" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} /><br/>
                 
-                <input required type="password" id="camposenha" placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} /><br/>
-                <button>Entrar</button>
-                <p onClick={()=>{navigate("/cadastro")}}>Não tem uma conta? Cadastre-se!</p>
-            </form>
-        </Styledlogin>
-            
-        </div>
+                <input required type="text" id="camposenha" placeholder="senha" value={senha} onChange={e => setSenha(e.target.value)} /><br/>
+                
+                <input required type="text" id="campoNome" placeholder="nome" value={nome} onChange={e => setNome(e.target.value)} /><br/>
+                
+                <input required type="text" id="campoconfirmasenha" placeholder="confirme a senha" value={confirmaSenha} onChange={e => setConfirmaSenha(e.target.value)} /><br/>
 
+                <button>Cadastra</button>
+                <p onClick={()=>{navigate("/")}}>Já tem uma conta? Faça login!</p>
+            </form>
+            
+        </Styledlogin>
     )
 }
-
 
 const Styledlogin = styled.div`
   display: flex;
@@ -93,7 +89,7 @@ const Styledlogin = styled.div`
     padding-left: 15px;
   }
 
-  input[type=password]{
+  input[type=text]{
     width: 100%;
     max-width: 375px;
     height: 58px;

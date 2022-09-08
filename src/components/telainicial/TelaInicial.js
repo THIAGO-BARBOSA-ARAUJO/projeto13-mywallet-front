@@ -1,10 +1,13 @@
 import imgsair from "../../img/btnsair.svg"
-import styled from "styled-components"
 import imgmais from "../../img/plus-circle-outlined.svg"
 import imgmenos from "../../img/minus-circle-outlined.svg"
-
+import { useNavigate } from "react-router-dom"
+import styled from "styled-components"
 
 export default function TelaInicial(){
+
+    let navigate = useNavigate()
+
     return(
         <Styledtelainicial>
             <div className="header">
@@ -16,11 +19,12 @@ export default function TelaInicial(){
                 <p>Não há registros de entrada ou saída</p>
             </div>
             <div className="saida_entrada">
-                <div className="caixanovoregistro">
+                <div onClick={()=>{navigate("/telanovaentrada")}} className="caixanovoregistro">
                     <img src={imgmais} />
                     <p>Nova entrada </p>
                 </div>
-                <div className="caixanovoregistro">
+
+                <div onClick={()=>{navigate("/telanovasaida")}} className="caixanovoregistro">
                     <img src={imgmenos} />
                     <p>Nova saída </p>
                 </div>

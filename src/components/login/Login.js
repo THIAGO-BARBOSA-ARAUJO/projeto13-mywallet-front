@@ -12,28 +12,28 @@ export default function Login(){
 
     function fazerLogin(event) {
 		event.preventDefault();
+    navigate("/telainicial")
+		// try{
+		// 	const requisicao = axios.post("", {
+    //         email: email,
+    //         password: senha
+		// })
 
-		try{
-			const requisicao = axios.post("", {
-            email: email,
-            password: senha
-		})
+    //         requisicao.then((req)=>{
+    //             //localStorage.setItem("imguser", req.data.image)
+    //             //localStorage.setItem("token", req.data.token)
+    //             navigate("/habitos")
+    //         })
+    //         .catch(()=>{
+    //             console.log("deu ruim na req parça")
+    //         })
 
-            requisicao.then((req)=>{
-                //localStorage.setItem("imguser", req.data.image)
-                //localStorage.setItem("token", req.data.token)
-                navigate("/habitos")
-            })
-            .catch(()=>{
-                console.log("deu ruim na req parça")
-            })
-
-		}catch {
-			console.log("deu ruim")
+		// }catch {
+		// 	console.log("deu ruim")
             
-            setEmail("")
-            setSenha("")
-		}
+    //         setEmail("")
+    //         setSenha("")
+		// }
 	}
 
     return(

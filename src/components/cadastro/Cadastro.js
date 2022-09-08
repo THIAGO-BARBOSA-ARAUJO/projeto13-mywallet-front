@@ -14,22 +14,29 @@ export default function Cadastro(){
     let navigate = useNavigate()
 
 
-    function fazerCadastro(event) {
-		event.preventDefault();
+    async function fazerCadastro(event) {
+      event.preventDefault();
+      
+      if(senha === confirmaSenha) {
 
-		try{
-			const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", {
-    
-            email: email,
-            name: nome,
-            password: senha
-            
-		});
-		console.log(requisicao)
-			navigate("/")
-		}catch {
-			console.log("deu ruim")
-		}
+        try{
+          const requisicao = await axios.post("http://localhost:5000/cadastro", {
+                email: email,
+                nome: nome,
+                senha: senha  
+        });
+        
+        navigate("/")
+        
+        }catch {
+          console.log("deu ruim na requisição")
+          return
+        }
+
+      }else {
+        console.log("As senhas não coencidem")
+      } 
+		
 	}
 
     return(

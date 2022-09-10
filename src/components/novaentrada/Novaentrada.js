@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import axios from "axios"
 
 export default function NovaEntrada() {
 
@@ -9,9 +10,23 @@ export default function NovaEntrada() {
 
     let navigate = useNavigate()
 
-    function enviarEntrada(event) {
+    async function enviarEntrada(event) {
 		event.preventDefault();
-    navigate("/telainicial")
+
+        try {
+            await axios.post(`http://localhost:5000/insereregistro`,{
+                value: valor,
+                text: descricao,
+                flag: true
+		},{
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            navigate("/telainicial")
+        } catch (error) {
+            console.log("ERROR: "+ error)
+        }
 	}
 
     return(

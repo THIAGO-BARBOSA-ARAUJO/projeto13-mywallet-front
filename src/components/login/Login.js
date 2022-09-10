@@ -10,30 +10,24 @@ export default function Login(){
 
     let navigate = useNavigate()
 
-    function fazerLogin(event) {
+    async function fazerLogin(event) {
 		event.preventDefault();
-    navigate("/telainicial")
-		// try{
-		// 	const requisicao = axios.post("", {
-    //         email: email,
-    //         password: senha
-		// })
+    
+		try{
+		  const requisicao = await axios.post("http://localhost:5000/login", {
+            email: email,
+            senha: senha
+		})
+      console.log(requisicao.data.token)
+      localStorage.setItem("token", requisicao.data.token)
+      navigate("/telainicial")
 
-    //         requisicao.then((req)=>{
-    //             //localStorage.setItem("imguser", req.data.image)
-    //             //localStorage.setItem("token", req.data.token)
-    //             navigate("/habitos")
-    //         })
-    //         .catch(()=>{
-    //             console.log("deu ruim na req parça")
-    //         })
-
-		// }catch {
-		// 	console.log("deu ruim")
-            
-    //         setEmail("")
-    //         setSenha("")
-		// }
+		}catch(error) {
+      console.log("ERROR: "+ error)
+      alert("Email ou senha errados!")
+      //setEmail("")
+      //setSenha("")
+	  }
 	}
 
     return(

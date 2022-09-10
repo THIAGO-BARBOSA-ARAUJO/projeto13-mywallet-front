@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
+import axios from "axios"
 
 export default function NovaSaida() {
 
@@ -9,15 +10,29 @@ export default function NovaSaida() {
 
     let navigate = useNavigate()
 
-    function enviarEntrada(event) {
+    async function enviarSaida(event) {
 		event.preventDefault();
-    navigate("/telainicial")
+
+        try {
+            await axios.post(`http://localhost:5000/insereregistro`,{
+                value: valor,
+                text: descricao,
+                flag: false
+		},{
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            navigate("/telainicial")
+        } catch (error) {
+            console.log("ERROR: "+ error)
+        }
 	}
 
     return(
         
         <Styledlogin>
-            <form onSubmit={enviarEntrada}>
+            <form onSubmit={enviarSaida}>
                 
                 <h1>Nova saída</h1>
                 <input required type="text" id="campovalor" placeholder="valor" value={valor} onChange={e => setValor(e.target.value)} /><br/>

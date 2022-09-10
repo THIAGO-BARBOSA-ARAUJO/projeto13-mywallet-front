@@ -160,6 +160,7 @@ const Styledtelainicial = styled.div`
         max-width: 326px;
         height: 70%;
         background: #FFFFFF;
+        overflow: scroll;
         border-radius: 5px;
         background-color: #FFFFFF;
         display: flex;

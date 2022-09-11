@@ -35,7 +35,7 @@ export default function NovaEntrada() {
             <form onSubmit={enviarEntrada}>
                 
                 <h1>Nova entrada</h1>
-                <input required type="text" id="campovalor" placeholder="valor" value={valor} onChange={e => setValor(e.target.value)} /><br/>
+                <input required type="number" id="campovalor" placeholder="valor" value={valor} onChange={e => setValor(e.target.value)} /><br/>
                 
                 <input required type="text" id="campodescrição" placeholder="descrição" value={descricao} onChange={e => setDescricao(e.target.value)} /><br/>
                 <button>Salvar entrada</button>
@@ -81,6 +81,16 @@ const Styledlogin = styled.div`
         font-size: 18px;
         line-height: 23px;
         color: #000000;
+    }
+
+    //esconde as setinhas de escolher o número no input type=number
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
     }
 
     button{

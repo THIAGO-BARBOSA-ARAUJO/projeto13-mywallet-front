@@ -59,6 +59,7 @@ const Styledlogin = styled.div`
   align-items: center;
   background: #8c11be;
   height: 100vh;
+  padding: 10px;
 
   form{
     width: 100%;
@@ -81,7 +82,6 @@ const Styledlogin = styled.div`
 
   input[type=email]{
     width: 100%;
-    max-width: 350px;
     height: 58px;
     background: #FFFFFF;
     border-radius: 5px;
@@ -100,7 +100,6 @@ const Styledlogin = styled.div`
 
   input[type=password]{
     width: 100%;
-    max-width: 350px;
     height: 58px;
     background: #FFFFFF;
     border-radius: 5px;

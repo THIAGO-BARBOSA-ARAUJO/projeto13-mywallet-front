@@ -86,10 +86,11 @@ export default function TelaInicial({nome}){
                 )
                })  : <p>Não há registros de entrada ou saída</p> }
                
-                <div className="total">
+                
+            </div>
+            <div className="total">
                     <span className="saldo">SALDO</span>
                     <span className="valor">{total}</span>
-                </div>
             </div>
             <div className="saida_entrada">
                 <div onClick={()=>{navigate("/telanovaentrada")}} className="caixanovoregistro">
@@ -126,8 +127,9 @@ const StyledRegistro = styled.ul`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  max-width: 375;
   padding: 10px;
-
+  
   .container_dt {
     display: flex;
     width: 100%;
@@ -172,10 +174,12 @@ const Styledtelainicial = styled.div`
     background: #8c11be;
     width: 100%;
     max-width: 375px;
-    height: 100vh;
     padding: 0 24px;
     padding-top: 25px;
     margin: 0 auto;
+    height: 100vh;
+    overflow: hidden;
+    padding-bottom: 20px;
 
     .header{
         display: flex;
@@ -197,12 +201,11 @@ const Styledtelainicial = styled.div`
 
     .telaregistros{
         width: 100%;
-        max-width: 326px;
+        max-width: 327px;
         height: 70%;
         background: #FFFFFF;
         overflow: scroll;
-        border-radius: 5px;
-        background-color: #FFFFFF;
+        border-radius: 3px 3px 0 0;
         display: flex;
         flex-direction: column;
         justify-content: ${(props) => props.orientacao === true ? "flex-start" : "center"}; // mudar dinâmicamente
@@ -229,18 +232,16 @@ const Styledtelainicial = styled.div`
         transform: translate(-50%, -50%)
     }
 
-    .telaregistros .total {
+    .total {
         display: flex;
         justify-content: space-between;
         background-color: #FFFFFF;
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        border-radius: 0 0 3px 3px;
         width: 100%;
 
     }
 
-    .telaregistros .total .saldo {
+    .total .saldo {
         font-family: 'Raleway';
         font-style: normal;
         font-weight: 700;
@@ -250,7 +251,7 @@ const Styledtelainicial = styled.div`
         color: #000000;
     }
 
-    .telaregistros .total .valor {
+     .total .valor {
         font-family: 'Raleway';
     font-style: normal;
     font-weight: 400;
@@ -269,8 +270,6 @@ const Styledtelainicial = styled.div`
     .caixanovoregistro{
         width: 100%;
         max-width: 155px;
-        height: 16vh;
-
         background: #A328D6;
         border-radius: 5px;
         margin-top: 13px;
@@ -279,6 +278,10 @@ const Styledtelainicial = styled.div`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    caixanovoregistro:first-of-type {
+        margin-right: 5px;
     }
 
     .caixanovoregistro img {

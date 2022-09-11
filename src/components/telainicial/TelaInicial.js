@@ -6,12 +6,11 @@ import styled from "styled-components"
 import axios from "axios"
 import { useEffect, useState } from "react"
 
-export default function TelaInicial(){
+export default function TelaInicial({nome}){
 
     const [registros, setRegistros] = useState([])
     const [orientacao, setOrientacao] = useState(true)
-    const [ficaVerde, setFicaVerde] = useState(false)
-
+    const [total, setTotal] = useState(0)
     let navigate = useNavigate()
 
    async function renderizarRegistros(){
@@ -20,7 +19,6 @@ export default function TelaInicial(){
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         })
-        //console.log(requisicao.data)
         setRegistros(requisicao.data)
         if(requisicao.data.length >= 1){
             setOrientacao(true)
@@ -33,23 +31,65 @@ export default function TelaInicial(){
 		renderizarRegistros()
 	}, [])
 
+    useEffect(() => {
+        let total = 0
+		registros.map((registro)=>{
+            if(registro.flag){
+                
+                let num = Number(registro.valor)
+                total = total + num
+                setTotal(total.toFixed(2))      
+            }else{
+                
+                let num = Number(registro.valor)
+                total = total - num
+                setTotal(total.toFixed(2))
+            }
+            
+        })
+	}, [registros])
     
+    async function Deslogar(){
+
+        const resp = prompt("Gostaria mesmo de deslogar ?")
+        if(resp === "Sim" || resp === "sim"){
+            
+            try {
+                await axios.delete("http://localhost:5000/deslogar", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+
+            navigate("/")
+            
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
 
     return(
         <Styledtelainicial orientacao={orientacao}>
             <div className="header">
-                <h1>olá, Fulano</h1>
-                <img src={imgsair}/>
+                <h1>olá, {localStorage.getItem("nome")}</h1>
+                <img onClick={(()=>{Deslogar()})} src={imgsair}/>
             </div>
 
             <div className="telaregistros">
-               {registros.map((registro, key) => {
-                const vv = registro.flag
+               
+               {registros.length > 0 ? registros.map((registro, key) => {
+                const flag = registro.flag
                 
                 return(
-                    (registros.length >= 1 ? <Registro vv={vv} key={key} data={registro.date} texto={registro.text} valor={registro.value} /> : "Não há registros de entrada ou saída")
+                    <Registro flag={flag} key={key} data={registro.date} texto={registro.text} valor={registro.valor} />
                 )
-               })}
+               })  : <p>Não há registros de entrada ou saída</p> }
+               
+                <div className="total">
+                    <span className="saldo">SALDO</span>
+                    <span className="valor">{total}</span>
+                </div>
             </div>
             <div className="saida_entrada">
                 <div onClick={()=>{navigate("/telanovaentrada")}} className="caixanovoregistro">
@@ -67,9 +107,9 @@ export default function TelaInicial(){
 }
 
 
-function Registro({data, texto, valor, vv }) {
+function Registro({data, texto, valor, flag }) {
     return (
-      <StyledRegistro verde={vv}>
+      <StyledRegistro verde={flag}>
         <div className="container_dt">
             <li className="data">{data}</li>
             <li className="texto">{texto}</li>
@@ -167,21 +207,57 @@ const Styledtelainicial = styled.div`
         flex-direction: column;
         justify-content: ${(props) => props.orientacao === true ? "flex-start" : "center"}; // mudar dinâmicamente
         align-items: center;
-        
+        position: relative;
     }
 
     .telaregistros p {
         width: 100%;
         max-width: 180px;
-
         font-family: 'Raleway';
         font-style: normal;
         font-weight: 400;
         font-size: 20px;
         line-height: 23px;
         text-align: center;
-
         color: #868686;
+    }
+
+    .telaregistros > p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    .telaregistros .total {
+        display: flex;
+        justify-content: space-between;
+        background-color: #FFFFFF;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+    }
+
+    .telaregistros .total .saldo {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 20px;
+        margin: 10px 15px;
+        color: #000000;
+    }
+
+    .telaregistros .total .valor {
+        font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    margin: 11px 11px;
+    color: #03AC00;
     }
 
     .saida_entrada{

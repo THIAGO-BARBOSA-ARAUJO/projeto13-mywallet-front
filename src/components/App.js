@@ -5,7 +5,10 @@ import TelaInicial from "./telainicial/TelaInicial";
 import NovaEntrada from "./novaentrada/Novaentrada";
 import NovaSaida from "./novasaida/Navasaida";
 
+
+
 export default function App(){ 
+
     return(
         <BrowserRouter>
             <Routes>

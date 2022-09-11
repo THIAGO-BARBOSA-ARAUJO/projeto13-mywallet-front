@@ -3,7 +3,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import axios from "axios"
 
-export default function Login(){
+export default function Login({ setNome }){
     
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
@@ -18,15 +18,14 @@ export default function Login(){
             email: email,
             senha: senha
 		})
-      console.log(requisicao.data.token)
       localStorage.setItem("token", requisicao.data.token)
+      localStorage.setItem("nome", requisicao.data.usuario.nome)
       navigate("/telainicial")
 
 		}catch(error) {
-      console.log("ERROR: "+ error)
       alert("Email ou senha errados!")
-      //setEmail("")
-      //setSenha("")
+      setEmail("")
+      setSenha("")
 	  }
 	}
 

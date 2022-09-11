@@ -50,12 +50,23 @@ export default function Login({ setNome }){
 
 
 const Styledlogin = styled.div`
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: #8c11be;
   height: 100vh;
+
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   
   h1{
     text-align: center;
@@ -69,7 +80,8 @@ const Styledlogin = styled.div`
   }
 
   input[type=email]{
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     height: 58px;
     background: #FFFFFF;
     border-radius: 5px;
@@ -88,7 +100,7 @@ const Styledlogin = styled.div`
 
   input[type=password]{
     width: 100%;
-    max-width: 375px;
+    max-width: 350px;
     height: 58px;
     background: #FFFFFF;
     border-radius: 5px;
@@ -107,7 +119,7 @@ const Styledlogin = styled.div`
 
  button{
     width: 100%;
-    max-width: 375px;
+    max-width: 350px;
     height: 46px;
     background: #A328D6;
     border-radius: 5px;
